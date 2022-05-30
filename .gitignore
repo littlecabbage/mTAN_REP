@@ -1,0 +1,9 @@
+.DS_Store
+imgs/.DS_Store
+*.csv
+src/boarder_log/
+src/text_log/
+src/get_Swat/
+src/data/
+src/log/
+*.h5

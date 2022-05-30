@@ -1,0 +1,13 @@
+0000000000000000000000000000000000000000 623ffb95c423b936c19da402e69b7933adc95e3f littlecabbage <zengzh1997@gmail.com> 1651480342 +0000	commit (initial): first commit
+623ffb95c423b936c19da402e69b7933adc95e3f 0000000000000000000000000000000000000000 littlecabbage <zengzh1997@gmail.com> 1651480350 +0000	Branch: renamed refs/heads/master to refs/heads/main
+0000000000000000000000000000000000000000 623ffb95c423b936c19da402e69b7933adc95e3f littlecabbage <zengzh1997@gmail.com> 1651480350 +0000	Branch: renamed refs/heads/master to refs/heads/main
+623ffb95c423b936c19da402e69b7933adc95e3f 00723320d348cf16610684a747963c4a947ea960 littlecabbage <zengzh1997@gmail.com> 1651656823 +0000	commit: fixed time encoding
+00723320d348cf16610684a747963c4a947ea960 c45cf794f6ee9e3f14b71ec429b53e0458ce988d littlecabbage <zengzh1997@gmail.com> 1651715432 +0000	commit: fixed model(1. fixed out.shape, x.shape in models.py 2. fixed self.nf params setting)
+c45cf794f6ee9e3f14b71ec429b53e0458ce988d 51891ca9eb8f8d3e9dd7ad28ceb01dfd0b064db9 littlecabbage <zengzh1997@gmail.com> 1651740722 +0000	commit: modified [mean loss in train phase] && [max loss in test phase]
+51891ca9eb8f8d3e9dd7ad28ceb01dfd0b064db9 7e54dc44ebb714a9f46d7e5addd081ce68ee415a littlecabbage <zengzh1997@gmail.com> 1651799748 +0000	commit: add search best f1&pre&rec in debug_model.ipynb
+7e54dc44ebb714a9f46d7e5addd081ce68ee415a 0000000000000000000000000000000000000000 littlecabbage <zengzh1997@gmail.com> 1653481883 +0800	Branch: renamed refs/heads/main to refs/heads/main
+7e54dc44ebb714a9f46d7e5addd081ce68ee415a 7e54dc44ebb714a9f46d7e5addd081ce68ee415a littlecabbage <zengzh1997@gmail.com> 1653481883 +0800	Branch: renamed refs/heads/main to refs/heads/main
+7e54dc44ebb714a9f46d7e5addd081ce68ee415a 7e54dc44ebb714a9f46d7e5addd081ce68ee415a littlecabbage <zengzh1997@gmail.com> 1653482177 +0800	reset: moving to 7e54dc4
+7e54dc44ebb714a9f46d7e5addd081ce68ee415a 8912b219aff4d0e3a5134d66bae5828c39628b1d littlecabbage <zengzh1997@gmail.com> 1653922111 +0800	commit: first commit
+8912b219aff4d0e3a5134d66bae5828c39628b1d 0000000000000000000000000000000000000000 littlecabbage <zengzh1997@gmail.com> 1653922355 +0800	Branch: renamed refs/heads/main to refs/heads/main
+8912b219aff4d0e3a5134d66bae5828c39628b1d 8912b219aff4d0e3a5134d66bae5828c39628b1d littlecabbage <zengzh1997@gmail.com> 1653922355 +0800	Branch: renamed refs/heads/main to refs/heads/main
