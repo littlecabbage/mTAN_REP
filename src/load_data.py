@@ -50,7 +50,7 @@ def load_swat(batch_size, beta = 0):
         values = values
 
 
-    std_scaleer = StandardScaler()
+    # std_scaleer = StandardScaler()
     # values = std_scaleer.fit_transform(values)
 
     n_sensor = 51

@@ -92,7 +92,7 @@ def search_best_f1(val_predict, test_label, test_predict):
     best_thr = max(val_predict)
     predict_ = [0 if x < best_thr else 1 for x in test_predict]
     f1, pre, rec = f1_score(test_label, predict_), precision_score(test_label, predict_), recall_score(test_label, predict_)
-    return f1, pre, rec
+    return best_thr, f1, pre, rec
 
 if args.beta > 0:
     tm = datetime.now().strftime("%m-%dT%H:%M:%S")
@@ -202,10 +202,15 @@ if __name__ == '__main__':
                 observed_data, observed_mask, observed_tp = val_batch[:, :, :dim], val_batch[:, :, dim:2*dim], val_batch[:, :, -1]
                 loss = -rec(torch.cat((observed_data, observed_mask), 2), observed_tp)
 
-                loss, _  = loss.max(1)
+                # Use max
+                # loss, _  = loss.max(1)
+                # loss = loss.cpu().numpy()
+                # label_val.append(label.cpu().numpy())
+                # loss_val.append(loss)
 
+                # Use mean
+                loss = loss.mean(1)
                 loss = loss.cpu().numpy()
-
                 label_val.append(label.cpu().numpy())
                 loss_val.append(loss)
 
@@ -224,10 +229,15 @@ if __name__ == '__main__':
                 observed_data, observed_mask, observed_tp = test_batch[:, :, :dim], test_batch[:, :, dim:2*dim], test_batch[:, :, -1]
                 loss = -rec(torch.cat((observed_data, observed_mask), 2), observed_tp)
 
-                loss, _  = loss.max(1)
+                # Use max
+                # loss, _  = loss.max(1)
+                # loss = loss.cpu().numpy()
+                # label_test.append(label.cpu().numpy())
+                # loss_test.append(loss)
 
+                # Use min
+                loss = loss.mean(1)
                 loss = loss.cpu().numpy()
-
                 label_test.append(label.cpu().numpy())
                 loss_test.append(loss)
 
@@ -235,9 +245,9 @@ if __name__ == '__main__':
             label_test = np.concatenate(label_test)
 
 
-        f1, pre, recall = search_best_f1(test_label = label_test,test_predict = loss_test,val_predict = loss_val)
+        thr, f1, pre, recall = search_best_f1(test_label = label_test,test_predict = loss_test,val_predict = loss_val)
         Results.append((f1, pre, recall))
-        print("Epoch {%d}: loss_train = {%.4f} loss_val = {%.4f} \t[Best f1 = {%.4f}, pre = {%.4f}, rec = {%.4f}]\n" % (epoch, np.mean(loss_train), np.mean(loss_val), f1, pre, recall)) 
+        print("Epoch {%d}: loss_train = {%.4f} loss_val = {%.4f} \t[thr = {%.4f} f1 = {%.4f}, pre = {%.4f}, rec = {%.4f}]\n" % (epoch, np.mean(loss_train), np.mean(loss_val), thr, f1, pre, recall)) 
 
         # sw.add_scalars('loss', {'lossb1':lossb1.item(), 'lossd1':lossd1.item(), 'loss1':loss1.item(), 'lossb2':lossb2.item(), 'lossd2':lossd2.item(), 'loss2':loss2.item()}, global_step=global_step)
 
