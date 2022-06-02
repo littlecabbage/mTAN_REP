@@ -66,14 +66,28 @@ if args:
     parser.add_argument('--server_name', default = "machine-1-1", type=str) 
 args = parser.parse_args()
 
+def loss_func(y_pred, y_true):
+    # loss = torch.nn.BCELoss(y_pred, y_true)
+    L = torch.nn.MSELoss()
+    loss = L(y_pred, y_true)
+
+    return loss
+
+
 def train(model, train_loader, loss_train, optimizer, dim):
     model.train()
-    for train_batch, _ in train_loader:
+    for train_batch, label in train_loader:
         train_batch = train_batch.to(device)
         observed_data, observed_mask, observed_tp = train_batch[:, :, :dim], train_batch[:, :, dim:2*dim], train_batch[:, :, -1]
         loss = -rec(torch.cat((observed_data, observed_mask), 2), observed_tp)
+        label = label.unsqueeze(-1)
 
-        loss = loss.mean()
+        # loss = loss.mean()
+        
+        loss = torch.mean(loss, dim=1, keepdim=True)
+        loss = loss_func(loss.float().to(device), label.float().to(device))
+        # print(loss)
+
         loss_train.append(loss.item())
 
         optimizer.zero_grad()
@@ -91,14 +105,20 @@ def val(model, val_loader, loss_val, label_val, writer):
             loss = -model(torch.cat((observed_data, observed_mask), 2), observed_tp)
 
             # Use mean
-            loss = loss.mean(1)
-            loss = loss.cpu().numpy()
-            label_val.append(label.cpu().numpy())
-            loss_val.append(loss)
+            # loss = loss.mean(1)
+            # loss = loss.cpu().numpy()
 
+            loss = torch.mean(loss, dim=1, keepdim=True)
+            # loss = loss_func(loss.float().to(device), label.float().to(device))
+            # print(loss, loss.shape)
+            
+            
+            label_val.append(label.cpu().numpy())
+            loss_val.append(loss.cpu().numpy())
 
         loss_val = np.concatenate(loss_val)
         label_val = np.concatenate(label_val)
+        
     
     return model, loss_val, label_val
 
@@ -121,10 +141,14 @@ def test(model, save_path, thresh_hold):
             # loss_test.append(loss)
 
             # Use min
-            loss = loss.mean(1)
-            loss = loss.cpu().numpy()
+            # loss = loss.mean(1)
+            # loss = loss.cpu().numpy()
+
+            loss = torch.mean(loss, dim=1, keepdim=True)
+            # loss = loss_func(loss.float().to(device), label.float().to(device))
+            
             label_test.append(label.cpu().numpy())
-            loss_test.append(loss)
+            loss_test.append(loss.cpu().numpy())
 
         loss_test = np.concatenate(loss_test)
         label_test = np.concatenate(label_test)
